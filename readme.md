@@ -1,0 +1,1 @@
+'stonk' is a rudimentary trading bot
