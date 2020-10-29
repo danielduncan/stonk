@@ -5,6 +5,7 @@
 		}
 	],
 	"settings": {
-		"git.ignoreLimitWarning": true
+		"git.ignoreLimitWarning": true,
+		"python.pythonPath": "C:\\Program Files (x86)\\Python37-32\\python.exe"
 	}
 }
