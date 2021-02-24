@@ -1,4 +1,3 @@
 {
-    "git.ignoreLimitWarning": true,
-    "python.pythonPath": "/Users/daniel/opt/anaconda3/bin/python"
+    "git.ignoreLimitWarning": true
 }
