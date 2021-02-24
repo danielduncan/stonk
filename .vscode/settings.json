@@ -1,4 +1,4 @@
 {
     "git.ignoreLimitWarning": true,
-    "python.pythonPath": "C:\\Program Files (x86)\\Python37-32\\python.exe"
+    "python.pythonPath": "/Users/daniel/opt/anaconda3/bin/python"
 }
