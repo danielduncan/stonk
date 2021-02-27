@@ -11,7 +11,7 @@ dtype = torch.float
 device = torch.device("cpu")
 
 # generates random data as an input (to be fixed later)
-x = torch.linspace(-math.pi, math.pi, 36, device=device, dtype=dtype)
+x = torch.linspace(-math.pi, math.pi, 38, device=device, dtype=dtype)
 # inputs the historical closing prices of asset
 y = torch.from_numpy(data.historical_close_prices)
 
@@ -32,7 +32,7 @@ for t in range(len(data.historical_close_prices)):
     if t % 100 == 99:
         print(t, loss)
 
-    # backprop(ogate?) to compute the gradients of a, b, c and d with respect to loss
+    # backpropogate to compute the gradients of a, b, c and d with respect to loss
     grad_y_pred = 2.0 * (y_pred - y)
     grad_a = grad_y_pred.sum()
     grad_b = (grad_y_pred * x).sum()
@@ -50,9 +50,9 @@ print(
     f'Result: y = {a.item()} + {b.item()} x + {c.item()} x^2 + {d.item()} x^3')
 
 # sets the input of the price movement function to 9999 (maybe seconds?) from beginning of dataset
-datetime = 9999
-z = a.item() * datetime + b.item() * datetime + \
-    c.item() * datetime + d.item() * datetime
+currtime = 9999
+z = a.item() * currtime + b.item() * currtime + \
+    c.item() * currtime + d.item() * currtime
 
 # outputs the predicted price of the stock at the given time
 print(z)

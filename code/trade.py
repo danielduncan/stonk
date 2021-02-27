@@ -1,7 +1,7 @@
 # interface between the code and the Interactive Brokers API
 
 # imports analysis and data
-import analyse
+import analysis
 import data
 
 # Interactive Brokers imports
@@ -77,7 +77,7 @@ order.orderType = 'LMT'
 order.lmtPrice = data.mktPrice
 
 # determines if stock is worth buying by comparing current price with predicted price
-if (analyse.z > data.mktPrice):
+if (analysis.z > data.mktPrice):
     app.placeOrder(app.nextorderId, stockOrder(data.ticker), order)
 else:
     print('no action')
