@@ -26,13 +26,13 @@ learning_rate = 1e-6
 for t in range(len(data.historical_close_prices)):
     # forward pass: compute predicted y
     y_pred = a + b * x + c * x ** 2 + d * x ** 3
-
+    
     # compute and print loss
     loss = (y_pred - y).pow(2).sum().item()
     if t % 100 == 99:
         print(t, loss)
 
-    # backpropogate to compute the gradients of a, b, c and d with respect to loss
+    # backpropagate to compute the gradients of a, b, c and d with respect to loss
     grad_y_pred = 2.0 * (y_pred - y)
     grad_a = grad_y_pred.sum()
     grad_b = (grad_y_pred * x).sum()
@@ -51,6 +51,8 @@ print(
 
 # sets the input of the price movement function to 9999 (maybe seconds?) from beginning of dataset
 currtime = 9999
+
+# rename z to prediction
 z = a.item() * currtime + b.item() * currtime + \
     c.item() * currtime + d.item() * currtime
 
