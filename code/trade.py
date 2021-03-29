@@ -80,7 +80,7 @@ order.lmtPrice = data.mktPrice
 if (analysis.z > data.mktPrice):
     app.placeOrder(app.nextorderId, stockOrder(data.ticker), order)
 else:
-    print('no action')
+    print('No action!')
 
 time.sleep(3)
 

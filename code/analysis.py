@@ -11,7 +11,7 @@ dtype = torch.float
 device = torch.device("cpu")
 
 # generates random data as an input (to be fixed later)
-x = torch.linspace(-math.pi, math.pi, 38, device=device, dtype=dtype)
+x = torch.linspace(-math.pi, math.pi, 41, device=device, dtype=dtype)
 # inputs the historical closing prices of asset
 y = torch.from_numpy(data.historical_close_prices)
 
