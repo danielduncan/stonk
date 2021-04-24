@@ -77,7 +77,7 @@ order.orderType = 'LMT'
 order.lmtPrice = data.mktPrice
 
 # determines if stock is worth buying by comparing current price with predicted price
-if (analysis.z > data.mktPrice):
+if (analysis.prediction > data.mktPrice):
     app.placeOrder(app.nextorderId, stockOrder(data.ticker), order)
 else:
     print('No action!')
