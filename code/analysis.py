@@ -16,21 +16,25 @@ device = torch.device("cpu")
 
 x_train = torch.from_numpy(data.x_train).type(torch.Tensor)
 x_test = torch.from_numpy(data.x_test).type(torch.Tensor)
+
+# lstm
 y_train_lstm = torch.from_numpy(data.y_train).type(torch.Tensor)
 y_test_lstm = torch.from_numpy(data.y_test).type(torch.Tensor)
+
+# gru
 '''
 y_train_gru = torch.from_numpy(data.y_train).type(torch.Tensor)
 y_test_gru = torch.from_numpy(data.y_test).type(torch.Tensor)
 '''
 
-# common features of nn
+# common features of both networks
 input_dim = 1
 hidden_dim = 32
 num_layers = 2
 output_dim = 1
-num_epochs = 100
+num_epochs = 100 # use 100
 
-# LSTM
+# LSTM (slower, better predictions)
 class LSTM(nn.Module):
     def __init__(self, input_dim, hidden_dim, num_layers, output_dim):
         super(LSTM, self).__init__()
@@ -51,6 +55,28 @@ model = LSTM(input_dim=input_dim, hidden_dim=hidden_dim, output_dim=output_dim, 
 criterion = torch.nn.MSELoss(reduction='mean')
 optimiser = torch.optim.Adam(model.parameters(), lr=0.01)
 
+'''
+# GRU (faster, similar predictions)
+class GRU(nn.Module):
+    def __init__(self, input_dim, hidden_dim, num_layers, output_dim):
+        super(GRU, self).__init__()
+        self.hidden_dim = hidden_dim
+        self.num_layers = num_layers
+
+        self.gru = nn.GRU(input_dim, hidden_dim, num_layers, batch_first = True)
+        self.fc = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_dim).requires_grad_()
+        out, (hn) = self.gru(x, (h0.detach()))
+        out = self.fc(out[:, -1, :])
+        return out
+
+model = GRU(input_dim=input_dim, hidden_dim=hidden_dim, output_dim=output_dim, num_layers=num_layers)
+criterion = torch.nn.MSELoss(reduction='mean')
+optimiser = torch.optim.Adam(model.parameters(), lr=0.01)
+'''
+
 hist = np.zeros(num_epochs)
 start_time = time.time()
 lstm = []
@@ -68,8 +94,8 @@ for t in range(num_epochs):
 training_time = time.time()-start_time
 print("Training time: {}".format(training_time))
 
-scaleOutA = y_train_lstm.detach().numpy()
-scaleOutB = y_train_pred.detach().numpy()
+preditctionSet = data.scaler.inverse_transform(y_train_pred.detach().numpy())
+labelSet = data.scaler.inverse_transform(y_train_lstm.detach().numpy())
 
-print("lstm?: " + data.scaler.inverse_transform(scaleOutA))
-print("train prediction: " + data.scaler.inverse_transform(scaleOutB))
+print("predictions:\n" + str(preditctionSet[-1]))
+print("labels:\n" + str(labelSet[-1]))

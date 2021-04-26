@@ -2,9 +2,9 @@
 
 # imports the yfinance library used for webscraping the required data from Yahoo finance
 import yfinance as yf
+# for processing data
 import pandas as pd
 import numpy as np
-
 from sklearn.preprocessing import MinMaxScaler
 
 # retrieves the assets ticker
@@ -17,7 +17,7 @@ date = raw_historical.index[:]
 historical_close_prices = numpy_historical[:, 3]
 data = pd.DataFrame(index=date, columns=['Close'])
 
-# this is a really hacky solution
+# hacky method of formatting data
 for i in range(len(historical_close_prices)):
     data.loc[date[i], 'Close'] = historical_close_prices[i]
 
