@@ -32,7 +32,7 @@ input_dim = 1
 hidden_dim = 32
 num_layers = 2
 output_dim = 1
-num_epochs = 100 # use 100
+num_epochs = 1 # use 100
 
 # LSTM (slower, better predictions)
 class LSTM(nn.Module):
@@ -97,5 +97,7 @@ print("Training time: {}".format(training_time))
 preditctionSet = data.scaler.inverse_transform(y_train_pred.detach().numpy())
 labelSet = data.scaler.inverse_transform(y_train_lstm.detach().numpy())
 
+# final predicted value
 print("predictions:\n" + str(preditctionSet[-1]))
+# final known value
 print("labels:\n" + str(labelSet[-1]))
