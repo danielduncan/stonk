@@ -8,30 +8,36 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
 # retrieves the assets ticker
-ticker = input("Ticker to be traded: ")
+# ticker = input("Ticker to be traded: ")
+def retrieveData(ticker):
+    # seperates historical data into unique date and closing price arrays
+    raw_historical = yf.download(ticker, period='max', auto_adjust=True)
+    numpy_historical = raw_historical.to_numpy()
+    date = raw_historical.index[:]
+    historical_close_prices = numpy_historical[:, 3]
+    data = pd.DataFrame(index=date, columns=['Close'])
 
-# seperates historical data into unique date and closing price arrays
-raw_historical = yf.download(ticker, period='max', auto_adjust=True)
-numpy_historical = raw_historical.to_numpy()
-date = raw_historical.index[:]
-historical_close_prices = numpy_historical[:, 3]
-data = pd.DataFrame(index=date, columns=['Close'])
+    # hacky method of formatting data
+    for i in range(len(historical_close_prices)):
+        data.loc[date[i], 'Close'] = historical_close_prices[i]
 
-# hacky method of formatting data
-for i in range(len(historical_close_prices)):
-    data.loc[date[i], 'Close'] = historical_close_prices[i]
+    # print(data)
 
-print(data)
+    # definitely shouldn't be global... remember to fix later
+    global price
+    price = data[['Close']]
 
-# current market price of asset
-mktPrice = yf.Ticker(ticker).info["regularMarketPrice"]
+    # reshapes dataset within bounds -1 and 1 for the neural network
+    global scaler
+    scaler = MinMaxScaler(feature_range=(-1, 1))
+    price['Close'] = scaler.fit_transform(price['Close'].values.reshape(-1,1))
+    # print(price['Close'])
+    return scaler
 
-price = data[['Close']]
-
-# reshapes dataset within bounds -1 and 1 for the neural network
-scaler = MinMaxScaler(feature_range=(-1, 1))
-price['Close'] = scaler.fit_transform(price['Close'].values.reshape(-1,1))
-print(price['Close'])
+def mktPrice(ticker):
+    # current market price of asset
+    mktPrice = yf.Ticker(ticker).info["regularMarketPrice"]
+    return mktPrice
 
 # lookback is for sliding window method
 def dataSplit(inData, lookback):
@@ -57,4 +63,7 @@ def dataSplit(inData, lookback):
 
 lookback = 365
 
-x_train, y_train, x_test, y_test = dataSplit(price, lookback)
+def formSet(ticker):
+    retrieveData(ticker)
+    x_train, y_train, x_test, y_test = dataSplit(price, lookback)
+    return x_train, y_train, x_test, y_test

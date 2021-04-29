@@ -1,7 +1,7 @@
 # analyses stock data by observing historical data and fitting a function to the dataset using a PyTorch neural network
 
 # imports retrieved data
-import data
+from data import formSet, retrieveData
 # imports for neural network
 import torch
 import torch.nn as nn
@@ -13,19 +13,6 @@ import time
 # neural network initialise
 dtype = torch.float
 device = torch.device("cpu")
-
-x_train = torch.from_numpy(data.x_train).type(torch.Tensor)
-x_test = torch.from_numpy(data.x_test).type(torch.Tensor)
-
-# lstm
-y_train_lstm = torch.from_numpy(data.y_train).type(torch.Tensor)
-y_test_lstm = torch.from_numpy(data.y_test).type(torch.Tensor)
-
-# gru
-'''
-y_train_gru = torch.from_numpy(data.y_train).type(torch.Tensor)
-y_test_gru = torch.from_numpy(data.y_test).type(torch.Tensor)
-'''
 
 # common features of both networks
 input_dim = 1
@@ -77,27 +64,48 @@ criterion = torch.nn.MSELoss(reduction='mean')
 optimiser = torch.optim.Adam(model.parameters(), lr=0.01)
 '''
 
-hist = np.zeros(num_epochs)
-start_time = time.time()
-lstm = []
-
-for t in range(num_epochs):
-    y_train_pred = model(x_train)
-
-    loss = criterion(y_train_pred, y_train_lstm)
-    print("Epoch ", t, "MSE: ", loss.item())
-    hist[t] = loss.item()
-    optimiser.zero_grad()
-    loss.backward()
-    optimiser.step()
+def analysis(ticker):
     
-training_time = time.time()-start_time
-print("Training time: {}".format(training_time))
+    scaler = retrieveData(ticker)
+    x_train, y_train, x_test, y_test = formSet(ticker)
 
-preditctionSet = data.scaler.inverse_transform(y_train_pred.detach().numpy())
-labelSet = data.scaler.inverse_transform(y_train_lstm.detach().numpy())
+    x_train = torch.from_numpy(x_train).type(torch.Tensor)
+    x_test = torch.from_numpy(x_test).type(torch.Tensor)
 
-# final predicted value
-print("predictions:\n" + str(preditctionSet[-1]))
-# final known value
-print("labels:\n" + str(labelSet[-1]))
+    # lstm
+    y_train_lstm = torch.from_numpy(y_train).type(torch.Tensor)
+    y_test_lstm = torch.from_numpy(y_test).type(torch.Tensor)
+
+    # gru
+    '''
+    y_train_gru = torch.from_numpy(y_train).type(torch.Tensor)
+    y_test_gru = torch.from_numpy(y_test).type(torch.Tensor)
+    '''
+
+
+    hist = np.zeros(num_epochs)
+    start_time = time.time()
+    lstm = []
+
+    for t in range(num_epochs):
+        y_train_pred = model(x_train)
+
+        loss = criterion(y_train_pred, y_train_lstm)
+        print("Epoch ", t, "MSE: ", loss.item())
+        hist[t] = loss.item()
+        optimiser.zero_grad()
+        loss.backward()
+        optimiser.step()
+        
+    training_time = time.time()-start_time
+    print("Training time: {}".format(training_time))
+
+    preditctionSet = scaler.inverse_transform(y_train_pred.detach().numpy())
+    labelSet = scaler.inverse_transform(y_train_lstm.detach().numpy())
+
+    # final predicted value
+    print("predictions:\n" + str(preditctionSet[-1]))
+    # final known value
+    print("labels:\n" + str(labelSet[-1]))
+
+    return labelSet

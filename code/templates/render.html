@@ -1,11 +1,27 @@
 <!DOCTYPE html>
+<html lang="en">
 <html>
     <head>
-
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Auto Trade</title>
+      
+        <!-- Google Font: Proxima Nova -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Proxima+Nova:300,400,400i,700&display=fallback">
+        <!-- Font Awesome Icons -->
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/plugins/fontawesome-free/css/all.min.css') }}">
+        <!-- IonIcons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/dist/css/adminlte.min.css') }}">
+        <!-- Favicon -->
+        <link rel="icon" href="{{ url_for('static',filename='styles/stonkupdated.png') }}" type='image/x-icon'/>
     </head>
     <body>
-        <input type = "text" id = "ticker" name = "ticker" autocomplete = "off">
-        <button>Submit</button>
+        <form action = '/trading' method="POST" id=ticker/>
+            <input type = "text" id = "ticker" name = "ticker" autocomplete = "off"/>
+            <button>Submit</button>
+        </form>
         <!-- <input type = "button" id = 'script' name = "help" value = "Help" onclick = "goPython()"> -->
     </body>
 </html>

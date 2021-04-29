@@ -1,17 +1,27 @@
 from flask import Flask, render_template, request, jsonify
+import os
 
 app = Flask(__name__)
 
 @app.route('/')
 # how do names work and how do i pass a variable through to the bot
 def index():
+    return render_template('index.html')
+
+@app.route('/trade', methods=['GET'])
+def trade():
     return render_template('render.html')
 
-@app.route('/home', methods=['POST', 'GET'])
-def home():
-    import trade
-    
+@app.route('/trading', methods=['POST'])
+def trading():
+    if request.form['ticker'].isalpha() == True:
+        import analysis
+        return str(analysis.analysis(request.form['ticker']))
+    else:
+        return 'Not a ticker!'
 
-@app.route('/working')
-def working():
-    return 'Working!'
+# checks if user is connected to Interactive Brokers
+@app.route('/connectivity')
+def connectivity():
+    import connectivitytest
+    return "Check console for connection status."

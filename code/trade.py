@@ -2,7 +2,7 @@
 
 # imports analysis and data
 import analysis
-import data
+from data import mktPrice
 
 # Interactive Brokers imports
 from ibapi.client import EClient
@@ -44,7 +44,7 @@ def run_loop():
 # create the order
 def stockOrder(symbol):
     contract = Contract()
-    contract.symbol = data.ticker
+    contract.symbol = symbol
     contract.secType = 'STK'
     contract.currency = 'USD'  # fuck this but unindent is being a pain
     contract.exchange = 'ISLAND'
@@ -74,11 +74,11 @@ order = Order()
 order.action = 'BUY'
 order.totalQuantity = 1
 order.orderType = 'LMT'
-order.lmtPrice = data.mktPrice
+order.lmtPrice = mktPrice(ticker)
 
 # determines if stock is worth buying by comparing current price with predicted price
-if (analysis.labelSet[-1] > data.mktPrice):
-    app.placeOrder(app.nextorderId, stockOrder(data.ticker), order)
+if (analysis.labelSet[-1] > mktPrice(ticker)):
+    app.placeOrder(app.nextorderId, stockOrder(ticker), order)
 else:
     print('No action!')
 
