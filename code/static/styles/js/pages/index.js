@@ -84,7 +84,7 @@ $(function () {
       labels: ['18th', '20th', '22nd', '24th', '26th', '28th', '30th'],
       datasets: [{
         type: 'line',
-        data: [100, 120, 170, 167, 180, 177, 160],
+        data: [1, 10, 100, 1000, 2500, 5000, 10000],
         backgroundColor: 'transparent',
         borderColor: '#007bff',
         pointBorderColor: '#007bff',
@@ -95,7 +95,7 @@ $(function () {
       },
       {
         type: 'line',
-        data: [60, 80, 70, 67, 80, 77, 100],
+        data: [10000, 1000, 500, 20000, 250, 200, 10],
         backgroundColor: 'tansparent',
         borderColor: '#ced4da',
         pointBorderColor: '#ced4da',

@@ -6,13 +6,14 @@
   <title>Overview</title>
 
   <!-- Google Font: Proxima Nova -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Proxima+Nova:300,400,400i,700&display=fallback">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;400i;700&display=swap" rel="stylesheet">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ url_for('static',filename='styles/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- IonIcons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{{ url_for('static',filename='styles/dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/stonk.css') }}">
   <!-- Favicon -->
   <link rel="icon" href="{{ url_for('static',filename='styles/stonkupdated.png') }}" type='image/x-icon'/>
 </head>
@@ -49,15 +50,17 @@
         <div class="navbar-search-block">
           <form class="form-inline">
             <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
+              <form action = '/search' method = "POST" id ="tickSearch"/>
+                <input type="text" id = 'tickSearch' name = 'tickSearch' autocomplete = 'on' placeholder="ticker"/>
+                <div class="input-group-append">
+                  <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </form>
             </div>
           </form>
         </div>
@@ -91,7 +94,7 @@
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <!-- insert profile picture -->
-          <img src="{{ url_for('static',filename='styles/generic-profile-picture.png') }}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ url_for('static',filename='styles/img/generic-profile-picture.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">user</a>
@@ -235,10 +238,10 @@
                   <tbody>
                   <tr>
                     <td>
-                      <img src="{{ url_for('static',filename='styles/dist/img/default-150x150.png') }}" alt="Product 1" class="img-circle img-size-32 mr-2">
+                      <img src="{{ url_for('static',filename='styles/img/default-150x150.png') }}" alt="Product 1" class="img-circle img-size-32 mr-2">
                       NASDAQ:AMD
                     </td>
-                    <td>$80 USD</td>
+                    <td>${{ price1 }} USD</td>
                     <td>
                       <small class="text-success mr-1">
                         <i class="fas fa-arrow-up"></i>
@@ -254,10 +257,10 @@
                   </tr>
                   <tr>
                     <td>
-                      <img src="{{ url_for('static',filename='styles/dist/img/default-150x150.png') }}" alt="Product 1" class="img-circle img-size-32 mr-2">
+                      <img src="{{ url_for('static',filename='styles/img/default-150x150.png') }}" alt="Product 1" class="img-circle img-size-32 mr-2">
                       NYSE:NIO
                     </td>
-                    <td>$25 USD</td>
+                    <td>${{ price2 }} USD</td>
                     <td>
                       <small class="text-success mr-1">
                         <i class="fas fa-arrow-up"></i>
@@ -273,10 +276,10 @@
                   </tr>
                   <tr>
                     <td>
-                      <img src="{{ url_for('static',filename='styles/dist/img/default-150x150.png') }}" alt="Product 1" class="img-circle img-size-32 mr-2">
+                      <img src="{{ url_for('static',filename='styles/img/default-150x150.png') }}" alt="Product 1" class="img-circle img-size-32 mr-2">
                       ASX:DRO
                     </td>
-                    <td>0.18 AUD</td>
+                    <td>${{ price3 }} AUD</td>
                     <td>
                       <small class="text-success mr-1">
                         <i class="fas fa-arrow-up"></i>
@@ -292,11 +295,11 @@
                   </tr>
                   <tr>
                     <td>
-                      <img src="{{ url_for('static',filename='styles/dist/img/default-150x150.png') }}" alt="Product 1" class="img-circle img-size-32 mr-2">
+                      <img src="{{ url_for('static',filename='styles/img/default-150x150.png') }}" alt="Product 1" class="img-circle img-size-32 mr-2">
                       NASDAQ:PLUG
                       <!-- <span class="badge bg-danger">NEW</span> -->
                     </td>
-                    <td>30 USD</td>
+                    <td>${{ price4 }} USD</td>
                     <td>
                       <small class="text-success mr-1">
                         <i class="fas fa-arrow-up"></i>
@@ -446,13 +449,11 @@
 <!-- Bootstrap -->
 <script src="{{ url_for('static',filename='styles/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE -->
-<script src="{{ url_for('static',filename='styles/dist/js/adminlte.js') }}"></script>
-
+<script src="{{ url_for('static',filename='styles/js/adminlte.js') }}"></script>
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{ url_for('static',filename='styles/plugins/chart.js/Chart.min.js') }}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ url_for('static',filename='styles/dist/js/demo.js') }}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ url_for('static',filename='styles/dist/js/pages/index.js') }}"></script>
+<!-- Demo JS -->
+<script src="{{ url_for('static',filename='styles/js/demo.js') }}"></script>
+<script src="{{ url_for('static',filename='styles/js/pages/index.js') }}"></script>
 </body>
 </html>

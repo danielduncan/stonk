@@ -7,7 +7,8 @@ app = Flask(__name__)
 @app.route('/')
 # how do names work and how do i pass a variable through to the bot
 def index():
-    return render_template('index.html')
+    import data
+    return render_template('index.html', price1 = data.mktPrice('AMD'), price2 = data.mktPrice('NIO'), price3 = data.mktPrice('DRO.AX'), price4 = data.mktPrice('PLUG'))
 
 @app.route('/trade', methods=['GET'])
 def trade():
