@@ -28,4 +28,4 @@ def connectivity():
     import connectivitytest
     return "Check console for connection status."
 
-# serve(app, host='0.0.0.0', port=8080, threads=1) # waitress
+# serve(app, host='0.0.0.0', port=8080, threads=8) # waitress
