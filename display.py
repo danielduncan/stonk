@@ -24,8 +24,8 @@ def manuTrad():
 
 @app.route('/prediction', methods=['POST'])
 def trading():
-    # doesn't allow entry of international tickers (syntax of TIC.EX)
-    if request.form['ticker'].isalpha() == True:
+    # not secure input method
+    if request.method == 'POST': # request.form['ticker'].isalpha() == True: # this method doesn't allow entry of international tickers (syntax of TIC.EX)
         if request.form.get('quantum'):
             import quantum
             return 'qc pred' # str(quantum.analysis(request.form['ticker']))
@@ -35,6 +35,15 @@ def trading():
     else:
         return 'Not a ticker!'
 
+
+@app.route('/inputHelp')
+def inputHelp():
+    return render_template('inputHelp.html')
+    
+
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('500.html'), 500
 
 # checks if user is connected to Interactive Brokers
 @app.route('/connectivity')

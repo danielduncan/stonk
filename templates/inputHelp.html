@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Auto</title>
+    <title>500</title>
 
     <!-- Google Font: Proxima Nova -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -20,61 +20,7 @@
     <link rel="icon" href="{{ url_for('static',filename='styles/img/stonkupdated.png') }}" type='image/x-icon' />
 </head>
 
-<body class="hold-transition sidebar-mini">
-    <div class="wrapper">
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <!-- <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ url_for('index') }}" class="nav-link">home</a>
-              </li> -->
-            </ul>
-
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <form action='/search' method="POST" id="tickSearch" />
-                                <input type="text" id='tickSearch' name='tickSearch' autocomplete='on'
-                                    placeholder="ticker" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                        </form>
-                    </div>
-                    </form>
-    </div>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-            <i class="fas fa-expand-arrows-alt"></i>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-            <i class="fas fa-th-large"></i>
-        </a>
-    </li>
-    </ul>
-    </nav>
-    <!-- /.navbar -->
-
+<body class="hold-transition sidebar-mini"></bodyclass>
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
@@ -116,7 +62,7 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
-                       with font-awesome or any other icon font library -->
+               with font-awesome or any other icon font library -->
                     <li class="nav-item menu-open">
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
@@ -145,7 +91,6 @@
         </div>
         <!-- /.sidebar -->
     </aside>
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -153,12 +98,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Automated Trading</h1>
+                        <h1 class="m-0">Input Help</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">stonk</a></li>
-                            <li class="breadcrumb-item active">Automated Trading</li>
+                            <li class="breadcrumb-item active">Input Help</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -174,38 +119,17 @@
                         <div class="card">
                             <div class="card-header border-0">
                                 <div class="d-flex justify-content-between">
-                                    <h3 class="card-title">Suggest a Ticker</h3>
-                                    <a href="{{ url_for('inputHelp') }}">Help</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div>
-                                    <form action='/prediction' method="POST" id=ticker />
-                                    <input type="text" id="ticker" name="ticker" autocomplete="off" />
-                                    <button>Submit</button>
-                                    <input type="checkbox" id="quantum" name="quantum" value="True">
-                                    <label for="quantum">Quantum</label><br>
-                                    </form>
-                                    <!-- <input type = "button" id = 'script' name = "help" value = "Help" onclick = "goPython()"> -->
+                                    <p>Tickers are input in the format specified by <a href="https://finance.yahoo.com/">Yahoo Finance</a>.
+                                        <br>For US assets, input the ticker as everything after the colon in a regular ticker. For example, 'NASDAQ:AAPL' is input as 'AAPL'.</br>
+                                        <br>For assets on international markets, input the ticker as everything after the colon, followed by a full stop and the exchange as a two character code indicated by Yahoo Finance. For example, 'ASX:BHP' is input as 'BHP.AX'.</br>
+                                        <br>For cryptocurrency, input the crypto ticker, followed by a hyphen and the conversion currency. For example, BTC to USD is input as 'BTC-USD'.</br>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <!-- /.card -->
-
-                        <!-- REQUIRED SCRIPTS -->
-
-                        <!-- jQuery -->
-                        <script src="{{ url_for('static',filename='styles/plugins/jquery/jquery.min.js') }}"></script>
-                        <!-- Bootstrap -->
-                        <script
-                            src="{{ url_for('static',filename='styles/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-                        <!-- AdminLTE -->
-                        <script src="{{ url_for('static',filename='styles/js/adminlte.js') }}"></script>
-                        <!-- OPTIONAL SCRIPTS -->
-                        <script src="{{ url_for('static',filename='styles/plugins/chart.js/Chart.min.js') }}"></script>
-                        <!-- Demo JS -->
-                        <script src="{{ url_for('static',filename='styles/js/demo.js') }}"></script>
-                        <script src="{{ url_for('static',filename='styles/js/pages/index.js') }}"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-
-</html>
