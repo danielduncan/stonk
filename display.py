@@ -12,12 +12,17 @@ def index():
     return render_template('index.html', price1=data.mktPrice('AMD'), price2=data.mktPrice('NIO'), price3=data.mktPrice('DRO.AX'), price4=data.mktPrice('PLUG'))
 
 
-@app.route('/trade', methods=['GET'])
-def trade():
+@app.route('/autoTrad', methods=['GET'])
+def autoTrad():
     return render_template('autoTrad.html')
 
 
-@app.route('/trading', methods=['POST'])
+@app.route('/manuTrad', methods=['GET'])
+def manuTrad():
+    return render_template('manuTrad.html')
+
+
+@app.route('/prediction', methods=['POST'])
 def trading():
     if request.form['ticker'].isalpha() == True:
         import analysis

@@ -8,7 +8,7 @@
 
   <!-- Google Font: Proxima Nova -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;400i;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap" rel="stylesheet">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ url_for('static',filename='styles/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- IonIcons -->
@@ -16,7 +16,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ url_for('static',filename='styles/css/stonk.css') }}">
   <!-- Favicon -->
-  <link rel="icon" href="{{ url_for('static',filename='styles/stonkupdated.png') }}" type='image/x-icon' />
+  <link rel="icon" href="{{ url_for('static',filename='styles/img/stonkupdated.png') }}" type='image/x-icon' />
 </head>
 <!--
 `body` tag options:
@@ -86,7 +86,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ url_for('index') }}" class="brand-link">
-      <img src="{{ url_for('static',filename='styles/stonkupdated.png') }}" alt="stonk Logo"
+      <img src="{{ url_for('static',filename='styles/img/stonkupdated.png') }}" alt="stonk Logo"
         class="brand-image img-circle elevation-3" style="opacity: 0.8">
       <span class="brand-text font-weight-light">stonk</span>
     </a>
@@ -131,13 +131,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ url_for('trade') }}" class="nav-link active">
+                <a href="{{ url_for('autoTrad') }}" class="nav-link active">
                   <i class="nav-icon fas fa-rocket"></i>
                   <p>Automated Trading</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ url_for('trade') }}" class="nav-link active">
+                <a href="{{ url_for('manuTrad') }}" class="nav-link active">
                   <i class="nav-icon fas fa-dollar-sign"></i>
                   <p>Manual Trading</p>
                 </a>
