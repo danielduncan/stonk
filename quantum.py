@@ -6,6 +6,7 @@ import torch
 
 import qiskit
 
+
 class QuantumCircuit:
     def __init__(self, backend, qubits, shots):
         self._circuit = qiskit.QuantumCircuit(n_qubits)
@@ -25,7 +26,8 @@ class QuantumCircuit:
     def run(self, thetas):
         transpileCircuit = transpile(self._circuit, self.backend)
 
-        quantumObject = assemble(transpileCircuit, shots = self.shots, parameterBinds = [{self.theta: theta} for theta in thetas])
+        quantumObject = assemble(transpileCircuit, shots=self.shots, parameterBinds=[
+                                 {self.theta: theta} for theta in thetas])
         job = self.backend.run(quantumObject)
         result = job.result().getCounts(self._circuit)
 

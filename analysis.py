@@ -19,26 +19,33 @@ input_dim = 1
 hidden_dim = 32
 num_layers = 2
 output_dim = 1
-num_epochs = 1 # use 100
+num_epochs = 1  # use 100
 
 # LSTM (slower, better predictions)
+
+
 class LSTM(nn.Module):
     def __init__(self, input_dim, hidden_dim, num_layers, output_dim):
         super(LSTM, self).__init__()
         self.hidden_dim = hidden_dim
         self.num_layers = num_layers
 
-        self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first = True)
+        self.lstm = nn.LSTM(input_dim, hidden_dim,
+                            num_layers, batch_first=True)
         self.fc = nn.Linear(hidden_dim, output_dim)
 
     def forward(self, x):
-        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_dim).requires_grad_()
-        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_dim).requires_grad_()
+        h0 = torch.zeros(self.num_layers, x.size(
+            0), self.hidden_dim).requires_grad_()
+        c0 = torch.zeros(self.num_layers, x.size(
+            0), self.hidden_dim).requires_grad_()
         out, (hn, cn) = self.lstm(x, (h0.detach(), c0.detach()))
         out = self.fc(out[:, -1, :])
         return out
 
-model = LSTM(input_dim=input_dim, hidden_dim=hidden_dim, output_dim=output_dim, num_layers=num_layers)
+
+model = LSTM(input_dim=input_dim, hidden_dim=hidden_dim,
+             output_dim=output_dim, num_layers=num_layers)
 criterion = torch.nn.MSELoss(reduction='mean')
 optimiser = torch.optim.Adam(model.parameters(), lr=0.01)
 
@@ -64,8 +71,9 @@ criterion = torch.nn.MSELoss(reduction='mean')
 optimiser = torch.optim.Adam(model.parameters(), lr=0.01)
 '''
 
+
 def analysis(ticker):
-    
+
     scaler = retrieveData(ticker)
     x_train, y_train, x_test, y_test = formSet(ticker)
 
@@ -82,7 +90,6 @@ def analysis(ticker):
     y_test_gru = torch.from_numpy(y_test).type(torch.Tensor)
     '''
 
-
     hist = np.zeros(num_epochs)
     start_time = time.time()
     lstm = []
@@ -96,7 +103,7 @@ def analysis(ticker):
         optimiser.zero_grad()
         loss.backward()
         optimiser.step()
-        
+
     training_time = time.time()-start_time
     print("Training time: {}".format(training_time))
 
