@@ -25,8 +25,12 @@ def manuTrad():
 @app.route('/prediction', methods=['POST'])
 def trading():
     if request.form['ticker'].isalpha() == True:
-        import analysis
-        return str(analysis.analysis(request.form['ticker']))
+        if request.form.get('quantum'):
+            import quantum
+            return 'qc pred' # str(quantum.analysis(request.form['ticker']))
+        else:
+            import analysis
+            return str(analysis.analysis(request.form['ticker']))
     else:
         return 'Not a ticker!'
 
