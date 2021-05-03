@@ -1,6 +1,5 @@
 # for testing connectivity with the Interactive Brokers servers
 # not mine, provided by Interactive Brokers
-
 from ibapi.client import EClient
 from ibapi.wrapper import EWrapper
 

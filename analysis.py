@@ -1,5 +1,4 @@
 # analyses stock data by observing historical data and fitting a function to the dataset using a PyTorch neural network
-
 # imports retrieved data
 from data import formSet, retrieveData
 # imports for neural network
@@ -21,9 +20,8 @@ num_layers = 2
 output_dim = 1
 num_epochs = 1  # use 100
 
+'''
 # LSTM (slower, better predictions)
-
-
 class LSTM(nn.Module):
     def __init__(self, input_dim, hidden_dim, num_layers, output_dim):
         super(LSTM, self).__init__()
@@ -48,8 +46,8 @@ model = LSTM(input_dim=input_dim, hidden_dim=hidden_dim,
              output_dim=output_dim, num_layers=num_layers)
 criterion = torch.nn.MSELoss(reduction='mean')
 optimiser = torch.optim.Adam(model.parameters(), lr=0.01)
-
 '''
+
 # GRU (faster, similar predictions)
 class GRU(nn.Module):
     def __init__(self, input_dim, hidden_dim, num_layers, output_dim):
@@ -69,8 +67,6 @@ class GRU(nn.Module):
 model = GRU(input_dim=input_dim, hidden_dim=hidden_dim, output_dim=output_dim, num_layers=num_layers)
 criterion = torch.nn.MSELoss(reduction='mean')
 optimiser = torch.optim.Adam(model.parameters(), lr=0.01)
-'''
-
 
 def analysis(ticker):
 
@@ -80,24 +76,23 @@ def analysis(ticker):
     x_train = torch.from_numpy(x_train).type(torch.Tensor)
     x_test = torch.from_numpy(x_test).type(torch.Tensor)
 
+    '''
     # lstm
     y_train_lstm = torch.from_numpy(y_train).type(torch.Tensor)
     y_test_lstm = torch.from_numpy(y_test).type(torch.Tensor)
+    '''
 
     # gru
-    '''
     y_train_gru = torch.from_numpy(y_train).type(torch.Tensor)
     y_test_gru = torch.from_numpy(y_test).type(torch.Tensor)
-    '''
 
     hist = np.zeros(num_epochs)
     start_time = time.time()
-    lstm = []
 
     for t in range(num_epochs):
         y_train_pred = model(x_train)
 
-        loss = criterion(y_train_pred, y_train_lstm)
+        loss = criterion(y_train_pred, y_train_gru)
         print("Epoch ", t, "MSE: ", loss.item())
         hist[t] = loss.item()
         optimiser.zero_grad()
@@ -108,7 +103,7 @@ def analysis(ticker):
     print("Training time: {}".format(training_time))
 
     preditctionSet = scaler.inverse_transform(y_train_pred.detach().numpy())
-    labelSet = scaler.inverse_transform(y_train_lstm.detach().numpy())
+    labelSet = scaler.inverse_transform(y_train_gru.detach().numpy())
 
     # final predicted value
     print("predictions:\n" + str(preditctionSet[-1]))

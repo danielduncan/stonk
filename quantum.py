@@ -1,9 +1,6 @@
 # testground for hybrid classical-quantum neural network
-
 import numpy as np
-
 import torch
-
 import qiskit
 
 

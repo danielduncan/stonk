@@ -1,5 +1,4 @@
 # retrieves important asset data using the yfinance library
-
 # imports the yfinance library used for webscraping the required data from Yahoo finance
 import yfinance as yf
 # for processing data
@@ -7,10 +6,9 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
+
 # retrieves the assets ticker
 # ticker = input("Ticker to be traded: ")
-
-
 def retrieveData(ticker):
     # seperates historical data into unique date and closing price arrays
     raw_historical = yf.download(ticker, period='max', auto_adjust=True)
