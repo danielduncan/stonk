@@ -1,3 +1,4 @@
+# serving with flask/waitress
 from flask import Flask, render_template, request, jsonify
 import os
 from waitress import serve
@@ -6,22 +7,26 @@ from waitress import serve
 app = Flask(__name__)
 
 
+# dashboard
 @app.route('/')
 def index():
     import data
     return render_template('index.html', price1=data.mktPrice('AMD'), price2=data.mktPrice('NIO'), price3=data.mktPrice('DRO.AX'), price4=data.mktPrice('PLUG'))
 
 
+# auto trading
 @app.route('/autoTrad', methods=['GET'])
 def autoTrad():
     return render_template('autoTrad.html')
 
 
+# manual trading
 @app.route('/manuTrad', methods=['GET'])
 def manuTrad():
     return render_template('manuTrad.html')
 
 
+# output prediction
 @app.route('/prediction', methods=['POST'])
 def trading():
     # not secure input method
@@ -36,11 +41,13 @@ def trading():
         return 'Not a ticker!'
 
 
+# help
 @app.route('/inputHelp')
 def inputHelp():
     return render_template('inputHelp.html')
     
 
+# error handler for error 500
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template('500.html'), 500
@@ -52,4 +59,4 @@ def connectivity():
     return "Check console for connection status."
 
 
-serve(app, host='0.0.0.0', port=8080, threads=8) # waitress
+serve(app, host='0.0.0.0', port=8080, threads=8) # serving with waitress

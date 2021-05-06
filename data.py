@@ -1,5 +1,5 @@
 # retrieves important asset data using the yfinance library
-# imports the yfinance library used for webscraping the required data from Yahoo finance
+# for webscraping the required data from Yahoo finance
 import yfinance as yf
 # for processing data
 import pandas as pd
@@ -8,7 +8,6 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 # retrieves the assets ticker
-# ticker = input("Ticker to be traded: ")
 def retrieveData(ticker):
     # seperates historical data into unique date and closing price arrays
     raw_historical = yf.download(ticker, period='max', auto_adjust=True)
@@ -21,9 +20,7 @@ def retrieveData(ticker):
     for i in range(len(historical_close_prices)):
         data.loc[date[i], 'Close'] = historical_close_prices[i]
 
-    # print(data)
-
-    # definitely shouldn't be global... remember to fix later
+    # definitely shouldn't be global... fix before release
     global price
     price = data[['Close']]
 
@@ -31,18 +28,17 @@ def retrieveData(ticker):
     global scaler
     scaler = MinMaxScaler(feature_range=(-1, 1))
     price['Close'] = scaler.fit_transform(price['Close'].values.reshape(-1, 1))
-    # print(price['Close'])
     return scaler
 
 
+# returns current market price of an asset given its ticker
 def mktPrice(ticker):
     # current market price of asset
     mktPrice = yf.Ticker(ticker).info["regularMarketPrice"]
     return mktPrice
 
-# lookback is for sliding window method
 
-
+# splits data into training and testing sets
 def dataSplit(inData, lookback):
 
     raw = inData.to_numpy()  # convert to numpy array
@@ -65,9 +61,11 @@ def dataSplit(inData, lookback):
     return [x_train, y_train, x_test, y_test]
 
 
+# lookback is for sliding window method
 lookback = 365
 
 
+# forms the dataset for the neural network given a ticker
 def formSet(ticker):
     retrieveData(ticker)
     x_train, y_train, x_test, y_test = dataSplit(price, lookback)

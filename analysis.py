@@ -1,9 +1,10 @@
 # analyses stock data by observing historical data and fitting a function to the dataset using a PyTorch neural network
-# imports retrieved data
+# retrieved data
 from data import formSet, retrieveData
-# imports for neural network
+# neural network
 import torch
 import torch.nn as nn
+# for processing data
 import math
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
@@ -18,7 +19,7 @@ input_dim = 1
 hidden_dim = 32
 num_layers = 2
 output_dim = 1
-num_epochs = 1  # use 100
+num_epochs = 1  # use 100 for best results/efficiency
 
 '''
 # LSTM (slower, better predictions)
@@ -68,6 +69,8 @@ model = GRU(input_dim=input_dim, hidden_dim=hidden_dim, output_dim=output_dim, n
 criterion = torch.nn.MSELoss(reduction='mean')
 optimiser = torch.optim.Adam(model.parameters(), lr=0.01)
 
+
+# abstract analysis function for an asset given its ticker
 def analysis(ticker):
 
     scaler = retrieveData(ticker)
@@ -77,12 +80,12 @@ def analysis(ticker):
     x_test = torch.from_numpy(x_test).type(torch.Tensor)
 
     '''
-    # lstm
+    # lstm datasets
     y_train_lstm = torch.from_numpy(y_train).type(torch.Tensor)
     y_test_lstm = torch.from_numpy(y_test).type(torch.Tensor)
     '''
 
-    # gru
+    # gru datasets
     y_train_gru = torch.from_numpy(y_train).type(torch.Tensor)
     y_test_gru = torch.from_numpy(y_test).type(torch.Tensor)
 
@@ -105,9 +108,7 @@ def analysis(ticker):
     preditctionSet = scaler.inverse_transform(y_train_pred.detach().numpy())
     labelSet = scaler.inverse_transform(y_train_gru.detach().numpy())
 
-    # final predicted value
-    print("predictions:\n" + str(preditctionSet[-1]))
-    # final known value
-    print("labels:\n" + str(labelSet[-1]))
+    # final predicted value is preditctionSet[-1]
+    # final known value is labelSet[-1]
 
     return labelSet
