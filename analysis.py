@@ -105,10 +105,10 @@ def analysis(ticker):
     training_time = time.time()-start_time
     print("Training time: {}".format(training_time))
 
-    preditctionSet = scaler.inverse_transform(y_train_pred.detach().numpy())
+    predictionSet = scaler.inverse_transform(y_train_pred.detach().numpy())
     labelSet = scaler.inverse_transform(y_train_gru.detach().numpy())
 
-    # final predicted value is preditctionSet[-1]
+    # final predicted value is predictionSet[-1]
     # final known value is labelSet[-1]
 
     return labelSet
