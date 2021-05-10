@@ -45,6 +45,14 @@ def trading():
 @app.route('/inputHelp')
 def inputHelp():
     return render_template('inputHelp.html')
+
+@app.route('/dashMontHelp')
+def dashMontHelp():
+    return render_template('dashMontHelp.html')
+
+@app.route('/dashPerfHelp')
+def dashPerfHelp():
+    return render_template('dashPerfHelp.html')
     
 
 # error handler for error 500
