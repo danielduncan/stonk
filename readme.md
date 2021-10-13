@@ -1,4 +1,4 @@
-'stonk' is a rudimentary trading bot, written in Python and served with Flask. It was for a school project this year (2021), so it is not perfect.
+'stonk' is a rudimentary trading bot, written in Python and served with Flask. stonk was my year 12 Software Design and Development major project.
 
 **Host**
 1. Within any virtual environment:
